@@ -43,7 +43,12 @@
             // চ্যানেলগুলি লোড করার জন্য সিমুলেটেড বিলম্ব
             setTimeout(() => {
                 fetch('https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u')
-                    .then(response => response.text())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
                     .then(data => {
                         const lines = data.split('\n');
                         let channels = [];
@@ -55,7 +60,7 @@
                                 const nameMatch = line.match(/,(.*)/);
                                 if (logoMatch && nameMatch) {
                                     currentChannel.logo = logoMatch[1];
-                                    currentChannel.name = nameMatch[1];
+                                    currentChannel.name = nameMatch[1].trim();
                                 }
                             } else if (line.startsWith('http')) {
                                 currentChannel.url = line.trim();
@@ -90,6 +95,10 @@
                                 loadVideo(newSource);
                             });
                         });
+                    })
+                    .catch(error => {
+                        console.error('Error loading channels:', error);
+                        channelLoading.textContent = 'চ্যানেল লোড করতে ব্যর্থ হয়েছে।';
                     });
             }, 2000); // ডেমো প্রদর্শনের জন্য বিলম্ব
         }
