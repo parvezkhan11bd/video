@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +31,7 @@
     <!-- Video Player Section -->
     <div class="video-player">
         <div class="loading" id="videoLoading"></div>
-        <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="500" height="264" data-setup="{}">
+        <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" data-setup="{}">
             <source id="videoSource" src="" type="application/x-mpegURL">
         </video>
     </div>
@@ -61,7 +60,7 @@
 
         // Load demo video when the page loads
         document.addEventListener('DOMContentLoaded', function () {
-            const demoVideoUrl = 'https://i.imgur.com/ZvM0SYJ.mp4';
+            const demoVideoUrl = 'https://dzkyvlfyge.erbvr.com/PeaceTvBangla/tracks-v3a1/mono.m3u8';
             loadVideo(demoVideoUrl);
 
             // Fetch and load channels
@@ -69,7 +68,7 @@
         });
 
         function loadVideo(sourceUrl) {
-            video.src =;
+            video.src = sourceUrl; // Set the video source
             video.load(); // Load the new video source
             video.play(); // Start playing the video
         }
