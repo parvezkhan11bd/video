@@ -50,6 +50,7 @@
                         return response.text();
                     })
                     .then(data => {
+                        console.log('Channel data:', data); // ডেটা লোড হচ্ছে কি না দেখুন
                         const lines = data.split('\n');
                         let channels = [];
                         let currentChannel = {};
@@ -68,6 +69,9 @@
                                 currentChannel = {};
                             }
                         });
+
+                        // লোড হওয়া চ্যানেলগুলি কনসোলে দেখান
+                        console.log('Loaded channels:', channels);
 
                         channels.forEach(channel => {
                             const channelButton = document.createElement('a');
