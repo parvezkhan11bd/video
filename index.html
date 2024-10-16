@@ -40,71 +40,69 @@
 
         // চ্যানেল লোড করার ফাংশন
         function loadChannels() {
-            // চ্যানেলগুলি লোড করার জন্য সিমুলেটেড বিলম্ব
-            setTimeout(() => {
-                fetch('https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        console.log('Channel data:', data); // ডেটা লোড হচ্ছে কি না দেখুন
-                        const lines = data.split('\n');
-                        let channels = [];
-                        let currentChannel = {};
+            fetch('https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const lines = data.split('\n');
+                    let channels = [];
+                    let currentChannel = {};
 
-                        lines.forEach(line => {
-                            if (line.startsWith('#EXTINF')) {
-                                const logoMatch = line.match(/tvg-logo="(.*?)"/);
-                                const nameMatch = line.match(/,(.*)/);
-                                if (logoMatch && nameMatch) {
-                                    currentChannel.logo = logoMatch[1];
-                                    currentChannel.name = nameMatch[1].trim();
-                                }
-                            } else if (line.startsWith('http')) {
-                                currentChannel.url = line.trim();
-                                channels.push(currentChannel);
-                                currentChannel = {};
+                    lines.forEach(line => {
+                        if (line.startsWith('#EXTINF')) {
+                            const logoMatch = line.match(/tvg-logo="(.*?)"/);
+                            const nameMatch = line.match(/,(.*)/);
+                            if (logoMatch && nameMatch) {
+                                currentChannel.logo = logoMatch[1];
+                                currentChannel.name = nameMatch[1].trim();
                             }
-                        });
-
-                        // লোড হওয়া চ্যানেলগুলি কনসোলে দেখান
-                        console.log('Loaded channels:', channels);
-
-                        channels.forEach(channel => {
-                            const channelButton = document.createElement('a');
-                            channelButton.href = "#";
-                            channelButton.classList.add('channel-link');
-                            channelButton.setAttribute('data-link', channel.url);
-
-                            const logoImg = document.createElement('img');
-                            logoImg.src = channel.logo;
-                            logoImg.alt = channel.name + ' Logo';
-
-                            channelButton.appendChild(logoImg);
-                            channelList.appendChild(channelButton);
-                        });
-
-                        // চ্যানেলগুলি লোড করার পর প্রদর্শন করুন
-                        channelLoading.style.display = 'none';
-                        channelList.style.display = 'flex';
-
-                        // চ্যানেল লিঙ্কগুলিতে ইভেন্ট লিসেনার যোগ করুন
-                        document.querySelectorAll('.channel-link').forEach(function (link) {
-                            link.addEventListener('click', function (event) {
-                                event.preventDefault();
-                                const newSource = this.getAttribute('data-link');
-                                loadVideo(newSource);
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error loading channels:', error);
-                        channelLoading.textContent = 'চ্যানেল লোড করতে ব্যর্থ হয়েছে।';
+                        } else if (line.startsWith('http')) {
+                            currentChannel.url = line.trim();
+                            channels.push(currentChannel);
+                            currentChannel = {};
+                        }
                     });
-            }, 2000); // ডেমো প্রদর্শনের জন্য বিলম্ব
+
+                    // লোড হওয়া চ্যানেলগুলি কনসোলে দেখান
+                    console.log('Loaded channels:', channels);
+
+                    channels.forEach(channel => {
+                        const channelButton = document.createElement('a');
+                        channelButton.href = "#";
+                        channelButton.classList.add('channel-link');
+                        channelButton.setAttribute('data-link', channel.url);
+
+                        const logoImg = document.createElement('img');
+                        logoImg.src = channel.logo ? channel.logo : 'default-logo.png'; // ডিফল্ট লোগো
+                        logoImg.alt = channel.name + ' Logo';
+                        logoImg.style.width = '80px';
+                        logoImg.style.height = '80px';
+
+                        channelButton.appendChild(logoImg);
+                        channelList.appendChild(channelButton);
+                    });
+
+                    // চ্যানেলগুলি লোড করার পর প্রদর্শন করুন
+                    channelLoading.style.display = 'none';
+                    channelList.style.display = 'flex';
+
+                    // চ্যানেল লিঙ্কগুলিতে ইভেন্ট লিসেনার যোগ করুন
+                    document.querySelectorAll('.channel-link').forEach(function (link) {
+                        link.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            const newSource = this.getAttribute('data-link');
+                            loadVideo(newSource);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading channels:', error);
+                    channelLoading.textContent = 'চ্যানেল লোড করতে ব্যর্থ হয়েছে।';
+                });
         }
 
         // চ্যানেল লোড করা শুরু করুন
@@ -162,12 +160,6 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .channel-buttons a img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-        }
-
         .channel-buttons a:hover {
             background-color: #4CAF50;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
@@ -182,11 +174,6 @@
             .channel-buttons a {
                 width: 80px;
                 height: 80px;
-            }
-
-            .channel-buttons a img {
-                width: 60px;
-                height: 60px;
             }
         }
     </style>
