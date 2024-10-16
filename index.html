@@ -9,59 +9,38 @@
     <meta content="Watch live sports streaming online, including football, basketball, baseball, hockey, and more. Stream your favorite sports teams and events in HD, with no cable subscription required." name="keywords">
     <meta content="PK" name="author">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <link href="https://i.ibb.co.com/PQgtMq7/img-1-1728903047238.webp" rel="shortcut icon" type="image/x-icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowplayer/7.2.0/flowplayer.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowplayer/7.2.0/flowplayer.min.js"></script>
-    <link href="t.me/engparvezkhan.pk" rel="me">
-
+    <link href="https://i.ibb.co/com/PQgtMq7/img-1-1728903047238.webp" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css" rel="stylesheet">
+    <script src="https://cdn.jwplayer.com/libraries/your-jwplayer-library.js"></script> <!-- JW Player লাইব্রেরির ইউআরএল -->
 </head>
 
 <body>
-    <header>
-        <img src="https://i.ibb.co.com/WthG9Mn/IMG-20241015-WA0000.jpg" alt="Website Logo">
-    </header>
+<header>
+    <img src="https://i.ibb.co/com/WthG9Mn/IMG-20241015-WA0000.jpg" alt="Website Logo" style="width: 450px; height: auto; display: block; margin: 30px;">
+</header>
 
-    <div class="video-player" id="videoPlayer" data-flowplayer='{ "clip": { "sources": [{ "type": "application/x-mpegurl", "src": "" }] } }'>
-        <div class="loading" id="videoLoading">Loading video...</div>
-    </div>
+    <!-- ভিডিও প্লেয়ার সেকশন -->
+    <div class="video-player" id="videoPlayer"></div>
 
     <div class="loading" id="channelLoading">
-        <p>Loading channels...</p>
+        <p>চ্যানেল লোড হচ্ছে...</p>
     </div>
     <div class="channel-buttons" id="channelList" style="display: none;">
-        <!-- Channels will be dynamically loaded here -->
+        <!-- চ্যানেলগুলি এখানে ডায়নামিকভাবে লোড হবে -->
     </div>
 
     <script>
-        const videoPlayer = document.getElementById('videoPlayer');
-        const videoLoading = document.getElementById('videoLoading');
-        const channelLoading = document.getElementById('channelLoading');
-        const channelList = document.getElementById('channelList');
-
-        // Load demo video when the page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            const demoVideoUrl = 'https://dzkyvlfyge.erbvr.com/PeaceTvBangla/tracks-v3a1/mono.m3u8';
-            loadVideo(demoVideoUrl);
-            loadChannels();
+        // JW Player সেটআপ
+        jwplayer("videoPlayer").setup({
+            file: "https://dzkyvlfyge.erbvr.com/PeaceTvBangla/tracks-v3a1/mono.m3u8",
+            width: "100%",
+            height: "auto",
+            autostart: true
         });
 
-        function loadVideo(sourceUrl) {
-            // Initialize Flowplayer with the video source
-            flowplayer(videoPlayer, {
-                clip: {
-                    sources: [
-                        {
-                            type: 'application/x-mpegurl',
-                            src: sourceUrl
-                        }
-                    ]
-                }
-            });
-            videoLoading.style.display = 'none'; // Hide loading
-        }
-
+        // চ্যানেল লোড করার ফাংশন
         function loadChannels() {
-            // Simulate delay for loading channels
+            // চ্যানেলগুলি লোড করার জন্য সিমুলেটেড বিলম্ব
             setTimeout(() => {
                 fetch('https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u')
                     .then(response => response.text())
@@ -99,11 +78,11 @@
                             channelList.appendChild(channelButton);
                         });
 
-                        // Display channels after loading
+                        // চ্যানেলগুলি লোড করার পর প্রদর্শন করুন
                         channelLoading.style.display = 'none';
                         channelList.style.display = 'flex';
 
-                        // Add event listeners to channel links
+                        // চ্যানেল লিঙ্কগুলিতে ইভেন্ট লিসেনার যোগ করুন
                         document.querySelectorAll('.channel-link').forEach(function (link) {
                             link.addEventListener('click', function (event) {
                                 event.preventDefault();
@@ -112,9 +91,20 @@
                             });
                         });
                     });
-            }, 2000); // Simulating a delay for demonstration
+            }, 2000); // ডেমো প্রদর্শনের জন্য বিলম্ব
+        }
+
+        // চ্যানেল লোড করা শুরু করুন
+        loadChannels();
+
+        function loadVideo(sourceUrl) {
+            jwplayer("videoPlayer").load({
+                file: sourceUrl
+            });
+            jwplayer("videoPlayer").play();
         }
     </script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -126,24 +116,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        header img {
-            width: 450px;
-            height: auto;
-            display: block;
-            margin: 30px;
-        }
-
-        .video-player {
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            background-color: #1a1a1a;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 640px;
-            text-align: center;
         }
 
         .loading {
@@ -205,14 +177,14 @@
             }
         }
     </style>
+
     <footer>
         <div style="text-align: center;">
-            <span style="font-family: Arial;">
-                <span style="color: #ffffff;">©️2024 Kamarkhali Brodband Live Tv:</span>
-                <span style="color: #ffcd00;">All Rights Reserved</span>
+            <span style="font-family: arial;">
+                <span style="color:  #ffffff;">©️2024 Kamarkhali Brodband Live Tv:</span>
+                <span style="color:  #ffcd00;">All Rights Reserved</span>
             </span>
         </div>
     </footer>
 </body>
-
 </html>
