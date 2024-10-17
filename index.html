@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+
 <?php
 session_start();
 
@@ -31,9 +34,8 @@ file_put_contents($session_file, serialize($online_visitors));
 // বর্তমানে কতজন ভিজিটর অনলাইনে আছে
 $online_count = count($online_visitors);
 ?>
-
-
-<head>
+    
+    
     <meta charset="UTF-8"></meta>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
     <title>KamarKhali Broadband LIVE TV</title>
