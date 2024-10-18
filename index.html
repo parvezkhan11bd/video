@@ -1,181 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
+<meta content='HTML Tidy for HTML5 for Linux version 5.6.0' name='generator'/>
+<meta charset='UTF-8'/>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+<title>Kamarkhali Broadband Live</title>
+<meta content='ENJOY FREE LIVE IPTV' name='description'/>
+<meta content='Watch live sports streaming online, including football, basketball, baseball, hockey, and more. Stream your favorite sports teams and events in HD, with no cable subscription required.' name='keywords'/>
+<meta content='Rubel Vai' name='author'/>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+<link href='https://i.ibb.co.com/PQgtMq7/img-1-1728903047238.webp' rel='shortcut icon' type='image/x-icon'/>
+<link href='https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css' rel='stylesheet'/>
+<script src='https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js'/>
+<script src='https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js'/>
+<link href='t.me/engparvezkhan' rel='me'/>
 
-<?php
-session_start();
-
-// সেশন ফাইলের নাম
-$session_file = 'online_visitors.txt';
-
-// বর্তমান সময়
-$current_time = time();
-
-// ভিজিটরদের তথ্য ধরে রাখার জন্য একটি অ্যারে
-$online_visitors = [];
-
-// যদি ফাইলটি থাকে, তাহলে তার ডেটা পড়া
-if (file_exists($session_file)) {
-    $online_visitors = unserialize(file_get_contents($session_file));
-}
-
-// বর্তমান ভিজিটরের সেশনের জন্য সময় আপডেট
-$online_visitors[session_id()] = $current_time;
-
-// পুরোনো সেশন মুছে ফেলা (যারা ৩০০ সেকেন্ড বা ৫ মিনিট ধরে অনলাইন নেই)
-$online_visitors = array_filter($online_visitors, function($last_active) use ($current_time) {
-    return ($current_time - $last_active) < 300;
-});
-
-// আপডেট করা ডেটা ফাইলে সংরক্ষণ
-file_put_contents($session_file, serialize($online_visitors));
-
-// বর্তমানে কতজন ভিজিটর অনলাইনে আছে
-$online_count = count($online_visitors);
-?>
-    
-    
-    <meta charset="UTF-8"></meta>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
-    <title>KamarKhali Broadband LIVE TV</title>
-    <meta content="ENJOY FREE LIVE IPTV" name="description"></meta>
-    <meta content="Watch live sports streaming online, including football, basketball, baseball, hockey, and more. Stream your favorite sports teams and events in HD, with no cable subscription required." name="keywords"></meta>
-    <meta content="PK" name="author"></meta>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"></meta>
-    <link href="https://i.ibb.co.com/PQgtMq7/img-1-1728903047238.webp" rel="shortcut icon" type="image/x-icon"></link>
-
-    <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css" rel="stylesheet"></link>
-    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
-<link href="t.me/engparvezkhan.pk" rel="me"></link>
-
-</head><body>
-<header>
-    <img src="https://i.ibb.co.com/WthG9Mn/IMG-20241015-WA0000.jpg" alt="Website Logo" style="width: 450px; height: auto; display: block; margin: 30px ;">
-</header>
-
-    </html> 
-
-    <!--Video Player Section-->
-    <div class="video-player">
-        
-        <div class="loading" id="videoLoading">
-           
-        </div>
-        <video autoplay="" controls="" crossorigin="" id="videoPlayer" playsinline="" unmuted="">
-            <source id="videoSource" src="" type="application/vnd.apple.mpegurl"></source>
-        </video>
+<b:skin><![CDATA[
 
 
-
-        
-
-    </div>
-        <div class="loading" id="channelLoading">
-            <p>Loading channels...</p>
-        </div>
-        <div class="channel-buttons" id="channelList" style="display: none;">
-            <!--Channels will be dynamically loaded here-->
-        </div>
-    
-
-    <script>
-        const video = document.getElementById('videoPlayer');
-        const videoLoading = document.getElementById('videoLoading');
-        const channelLoading = document.getElementById('channelLoading');
-        const channelList = document.getElementById('channelList');
-
-        // Display video loading animation
-        video.addEventListener('waiting', function () {
-            videoLoading.style.display = 'block';
-        });
-
-        video.addEventListener('playing', function () {
-            videoLoading.style.display = 'none';
-        });
-
-        // Load demo video when the page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            const demoVideoUrl = 'https://dzkyvlfyge.erbvr.com/PeaceTvBangla/tracks-v3a1/mono.m3u8';
-            loadVideo(demoVideoUrl);
-
-            // Fetch and load channels
-            loadChannels();
-        });
-
-        function loadVideo(sourceUrl) {
-            if (Hls.isSupported()) {
-                if (window.hls) {
-                    window.hls.destroy();
-                }
-                var hls = new Hls();
-                hls.loadSource(sourceUrl);
-                hls.attachMedia(video);
-                window.hls = hls;
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = sourceUrl;
-            }
-            video.play();
-        }
-
-        function loadChannels() {
-            // Simulate delay for loading channels
-            setTimeout(() => {
-                fetch('https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u')
-                    .then(response => response.text())
-                    .then(data => {
-                        const lines = data.split('\n');
-                        let channels = [];
-                        let currentChannel = {};
-
-                        lines.forEach(line => {
-                            if (line.startsWith('#EXTINF')) {
-                                const logoMatch = line.match(/tvg-logo="(.*?)"/);
-                                const nameMatch = line.match(/,(.*)/);
-                                if (logoMatch && nameMatch) {
-                                    currentChannel.logo = logoMatch[1];
-                                    currentChannel.name = nameMatch[1];
-                                }
-                            } else if (line.startsWith('http')) {
-                                currentChannel.url = line.trim();
-                                channels.push(currentChannel);
-                                currentChannel = {};
-                            }
-                        });
-
-                        channels.forEach(channel => {
-                            const channelButton = document.createElement('a');
-                            channelButton.href = "#";
-                            channelButton.classList.add('channel-link');
-                            channelButton.setAttribute('data-link', channel.url);
-
-                            const logoImg = document.createElement('img');
-                            logoImg.src = channel.logo;
-                            logoImg.alt = channel.name + ' Logo';
-
-                            channelButton.appendChild(logoImg);
-                            channelList.appendChild(channelButton);
-                        });
-
-                        // Display channels after loading
-                        channelLoading.style.display = 'none';
-                        channelList.style.display = 'flex';
-
-                        // Add event listeners to channel links
-                        document.querySelectorAll('.channel-link').forEach(function (link) {
-                            link.addEventListener('click', function (event) {
-                                event.preventDefault();
-                                const newSource = this.getAttribute('data-link');
-                                loadVideo(newSource);
-                            });
-                        });
-                    });
-            }, 2000); // Simulating a delay for demonstration
-        }
-    </script>
-
-    <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #181818;
@@ -209,8 +52,8 @@ $online_count = count($online_visitors);
             margin: 20px 0;
             background-color: #1a1a1a;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 640px;
+            width: 97%;
+            max-width: 500px;
             text-align: center;
             position: sticky;
             top: 0;
@@ -229,7 +72,7 @@ $online_count = count($online_visitors);
             width: 100%;
             height: auto;
             border-radius: 10px;
-            border: 2px solid #ffffff;
+            border: 2px solid #FFFFFF;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -248,7 +91,7 @@ $online_count = count($online_visitors);
             padding: 20px;
             border-radius: 10px;
             width: 100%;
-            max-width: 720px;
+            max-width: 360px;
             text-align: center;
         }
 
@@ -292,7 +135,7 @@ $online_count = count($online_visitors);
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        @media (max-width: 568px) {
+        @media (max-width: 768px) {
             .video-player,
             .channel-list {
                 width: 100%;
@@ -309,227 +152,127 @@ $online_count = count($online_visitors);
                 height: 60px;
             }
         }
-    </style>
 
+]]></b:skin>
+</head>
+<body>
+<!-- Custom Text Section -->
+<div class='custom-text'>
+<header><a href='https://www.t.me/engparvezkhan'><img class='responsive-img' src='https://i.ibb.co.com/WthG9Mn/IMG-20241015-WA0000.jpg' style='width: 400px; height: auto;'/></a></header>
+</div>
+<!-- Video Player Section -->
+<div class='video-player'>
 
-
-<script type='text/javascript'> 
-document.addEventListener('contextmenu', event => event.preventDefault()); 
-</script>
-<script type='text/javascript'> 
-//<![CDATA[ 
-var message="NoRightClicking is allowed in our website"; 
-function arpianDisableClick() { 
-if (document.all) { 
-alert(message); //Remove this line if you don't want alert message 
-return false; 
-} 
-} 
-function arpianNoRightClick(e) { 
-if (document.layers||(document.getElementById&&!document.all)) { 
-if (e.which==2||e.which==3) { 
-alert(message); //Remove this line if you don't want alert message 
-return false;} 
-} 
-} 
-if (document.layers) { 
-document.captureEvents(Event.MOUSEDOWN); 
-document.onmousedown=arpianNoRightClick; 
-} else{ 
-document.onmouseup=arpianNoRightClick; 
-document.oncontextmenu=arpianDisableClick; 
-} 
-document.oncontextmenu=new Function("return false") 
-//]]></script>
-
-
-
-
-
-
-
-
-<script type='text/javascript'>
-//<![CDATA[
-var uri = window.location.toString();
-if (uri.indexOf("%3D","%3D") > 0) {
-var clean_uri = uri.substring(0, uri.indexOf("%3D"));
-window.history.replaceState({}, document.title, clean_uri);
-}
-var uri = window.location.toString();
-if (uri.indexOf("%3D%3D","%3D%3D") > 0) {
-var clean_uri = uri.substring(0, uri.indexOf("%3D%3D"));
-window.history.replaceState({}, document.title, clean_uri);
-}
-var uri = window.location.toString();
-if (uri.indexOf("&m=1","&m=1") > 0) {
-var clean_uri = uri.substring(0, uri.indexOf("&m=1"));
-window.history.replaceState({}, document.title, clean_uri);
-}
-var uri = window.location.toString();
-if (uri.indexOf("?m=1","?m=1") > 0) {
-var clean_uri = uri.substring(0, uri.indexOf("?m=1"));
-window.history.replaceState({}, document.title, clean_uri);
-}
-//]]>
-</script>
-
-<script type='text/javascript'>
-if (typeof document.onselectstart!='undefined' ) {
-document.onselectstart=new Function (“return false” );
-}
-else {
-document.onmousedown=new Function ('return false' );
-document.onmouseup=new Function ('return true' );
-}
-</script>
-
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<video autoplay='' controls='' crossorigin='' id='videoPlayer' playsinline='' unmuted=''><source id='videoSource' src='' type='application/vnd.apple.mpegurl'/></video> 
+<!-- container -->
+<div id='rmpPlayer'/>
+<b:section class='marquee' id='marquee' showaddelement='yes'/>  
+<div class='marquee yellow'><marquee direction='left' onmouseout='start()' onmouseover='stop()' scrollamount='5'>*** বর&#2509;তম&#2494;ন&#2503;
+আম&#2494;দ&#2503;র ওয়&#2503;ব স&#2494;ইট আপড&#2503;ট চলছ&#2503;, আপড&#2503;ট চল&#2494;ক&#2494;ল&#2496;ন সময&#2492; ক&#2495;ছ&#2497; চ&#2509;য&#2494;ন&#2503;ল ড&#2494;উন
+হত&#2503; প&#2494;র&#2503;&#2404; ট&#2495;ভ&#2495; চ&#2509;য&#2494;ন&#2503;ল প&#2509;ল&#2503; হত&#2503; ৫ থ&#2503;ক&#2503; ১০ স&#2503;ক&#2503;ন&#2509;ড ট&#2494;ইম ন&#2495;ত&#2503; প&#2494;র&#2503;,
+তব&#2503; স&#2503;ট&#2494; স&#2494;র&#2509;ভ&#2494;র ও আপন&#2494;র ইন&#2509;ট&#2494;রন&#2503;ট&#2503;র উপর ন&#2495;র&#2509;ভর করব&#2503;&#2404; KB Live ট&#2495;ভ&#2495;র
+স&#2494;থ&#2503; থ&#2494;ক&#2497;ন, ধন&#2509;যব&#2494;দ&#2404; ***</marquee></div>
+<!-- container --></div>
+<div class='loading' id='channelLoading'>
+<p>Loading channels...</p>
+</div>
+<b:section class='main' id='main' showaddelement='yes'/>  
+<div class='channel-buttons' id='channelList' style='display: none;'>
+<!-- Channels will be dynamically loaded here --></div>
 <script>
-document.onkeydown = function(e) {
-var message='Content is protected\nYou cannot view the page source.';
-if (e.ctrlKey &&
-(e.keyCode === 67 ||
-e.keyCode === 86 ||
-e.keyCode === 85 ||
-e.keyCode === 117)) {
-alert(message);
-return false;
-} else {
-return true;
-}
-};
-$(document).keypress('u',function(e) {
-if(e.ctrlKey)
-{
-return false;
-}
-else
-{
-return true;
-}
-});
+    const video = document.getElementById(&#39;videoPlayer&#39;);
+    const videoLoading = document.getElementById(&#39;videoLoading&#39;);
+    const channelLoading = document.getElementById(&#39;channelLoading&#39;);
+    const channelList = document.getElementById(&#39;channelList&#39;);
+
+    // Display video loading animation
+    video.addEventListener(&#39;waiting&#39;, function () {
+        videoLoading.style.display = &#39;block&#39;;
+    });
+
+    video.addEventListener(&#39;playing&#39;, function () {
+        videoLoading.style.display = &#39;none&#39;;
+    });
+
+    // Load demo video when the page loads
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function () {
+        const demoVideoUrl = &#39;https://i.imgur.com/mIF83eI.mp4&#39;;
+        loadVideo(demoVideoUrl);
+
+        // Fetch and load channels
+        loadChannels();
+    });
+
+    function loadVideo(sourceUrl) {
+        if (Hls.isSupported()) {
+            if (window.hls) {
+                window.hls.destroy();
+            }
+            var hls = new Hls();
+            hls.loadSource(sourceUrl);
+            hls.attachMedia(video);
+            window.hls = hls;
+        } else if (video.canPlayType(&#39;application/vnd.apple.mpegurl&#39;)) {
+            video.src = sourceUrl;
+        }
+        video.play();
+    }
+
+    function loadChannels() {
+        // Simulate delay for loading channels
+        setTimeout(function () {
+            fetch(&#39;https://raw.githubusercontent.com/parvezkhan11bd/parvez_ip/refs/heads/main/toffe.m3u&#39;)
+                .then(function (response) { return response.text(); })
+                .then(function (data) {
+                    const lines = data.split(&#39;\n&#39;);
+                    let channels = [];
+                    let currentChannel = {};
+
+                    lines.forEach(function (line) {
+                        if (line.startsWith(&#39;#EXTINF&#39;)) {
+                            const logoMatch = line.match(/tvg-logo=&quot;(.*?)&quot;/);
+                            const nameMatch = line.match(/,(.*)/);
+                            if (logoMatch &amp;&amp; nameMatch) {
+                                currentChannel.logo = logoMatch[1];
+                                currentChannel.name = nameMatch[1];
+                            }
+                        } else if (line.startsWith(&#39;http&#39;)) {
+                            currentChannel.url = line.trim();
+                            channels.push(currentChannel);
+                            currentChannel = {};
+                        }
+                    });
+
+                    channels.forEach(function (channel) {
+                        const channelButton = document.createElement(&#39;a&#39;);
+                        channelButton.href = &quot;#&quot;;
+                        channelButton.classList.add(&#39;channel-link&#39;);
+                        channelButton.setAttribute(&#39;data-link&#39;, channel.url);
+
+                        const logoImg = document.createElement(&#39;img&#39;);
+                        logoImg.src = channel.logo;
+                        logoImg.alt = channel.name + &#39; Logo&#39;;
+
+                        channelButton.appendChild(logoImg);
+                        channelList.appendChild(channelButton);
+                    });
+
+                    // Display channels after loading
+                    channelLoading.style.display = &#39;none&#39;;
+                    channelList.style.display = &#39;flex&#39;;
+
+                    // Add event listeners to channel links
+                    document.querySelectorAll(&#39;.channel-link&#39;).forEach(function (link) {
+                        link.addEventListener(&#39;click&#39;, function (event) {
+                            event.preventDefault();
+                            const newSource = this.getAttribute(&#39;data-link&#39;);
+                            loadVideo(newSource);
+                        });
+                    });
+                });
+        }, 2000); // Simulating a delay for demonstration
+    }
 </script>
-
-
-
-
-<script src=”http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js”></script>
-<script>
-
-$(document).keydown(function (event) {
-var message = 'Content is protected\nYou cannot view the Dev Tools.';
-if (event.keyCode == 123) { // Prevent F12
-alert(message);
-return false;
-} else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I
-alert(message);
-return false;
-}
-});
-</script>
-
-
-<script>
-
-var message=”NoRightClicking is allowed in our website”;
-function arpianDisableClick() {
-if (document.all) {
-alert(message); //Remove this line if you don’t want alert message
-return false;
-}
-}
-function arpianNoRightClick(e) {
-if (document.layers||(document.getElementById&&!document.all)) {
-if (e.which==2||e.which==3) {
-alert(message); //Remove this line if you don’t want alert message
-return false;}
-}
-}
-if (document.layers) {
-document.captureEvents(Event.MOUSEDOWN);
-document.onmousedown=arpianNoRightClick;
-} else{
-document.onmouseup=arpianNoRightClick;
-document.oncontextmenu=arpianDisableClick;
-}
-document.oncontextmenu=new Function(“return false”)
-
-</script>
-
-
-
-<script type=’text/javascript’>
-document.addEventListener(‘contextmenu’, event => event.preventDefault());
-</script>
-
-
-<script>
-document.onkeydown = function(e) {
-var message = “Content is protected\nYou cannot view the page source.”;
-if (e.ctrlKey &&
-(e.keyCode === 67 ||
-e.keyCode === 86 ||
-e.keyCode === 85 ||
-e.keyCode === 117)) {
-alert(message);
-return false;
-} else {
-return true;
-}
-};
-$(document).keypress(“u”,function(e) {
-if(e.ctrlKey)
-{
-return false;
-}
-else
-{
-return true;
-}
-});
-
-//=============================================================
-//disable F12 Key and Ctrl + shift + I combination
-
-$(document).keydown(function (event) {
-var message = “Content is protected\nYou cannot view the Dev Tools.”;
-if (event.keyCode == 123) { // Prevent F12
-alert(message);
-return false;
-} else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I
-alert(message);
-return false;
-}
-});
-</script>
-
-
-
-
-
 
 </body>
-
-
-
-
-    <footer>
-    <div style="text-align: center;">
-        <span style="font-family: arial;">
-            <span style="color: #ffffff;">©️2024 Kamarkhali Broadband Live TV: </span> 
-            <span style="color: #ffcd00;">All Rights Reserved</span>
-        </span>
-        <p style="color: #ffffff;">
-            Currently Online Visitors: <?php echo $online_count; ?>
-        </p>
-    </div>
-</footer>
-
-     
-
-
-
-
-    
+</html>
